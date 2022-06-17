@@ -30,19 +30,22 @@ const Users = ({ addedUser }) => {
     };
 
     const handleDelete = (id) => {
-        const url = `http://localhost:5000/rider/${id}`;
+        const deleteConfirm = window.confirm("are you sure to delete this user?");
+        if (deleteConfirm) {
+            const url = `http://localhost:5000/rider/${id}`;
 
-        const remaining = users.filter((user) => user._id !== id);
+            const remaining = users.filter((user) => user._id !== id);
 
-        fetch(url, {
-            method: "DELETE",
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                if (data.deletedCount === 1) {
-                    setUsers(remaining);
-                }
-            });
+            fetch(url, {
+                method: "DELETE",
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    if (data.deletedCount === 1) {
+                        setUsers(remaining);
+                    }
+                });
+        }
     };
 
     return (
